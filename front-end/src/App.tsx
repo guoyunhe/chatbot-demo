@@ -1,8 +1,7 @@
 import { Box, Button, OutlinedInput, Paper } from '@mui/material';
 import { useCallback, useEffect, useState } from 'react';
 import { Send } from '@mui/icons-material';
-import { Chat, Message } from './types';
-import axios from 'axios';
+import { Chat } from './types';
 import MessagesList from './MessagesList';
 
 function App() {
@@ -12,16 +11,24 @@ function App() {
   const loadChat = useCallback(async () => {
     let data: Chat;
     if (chat?.id) {
-      data = (await axios.get<Chat>('/chats/' + chat.id)).data;
+      data = await (await fetch(import.meta.env.VITE_API_BASE_URL + '/chats/' + chat.id)).json();
     } else {
-      data = (await axios.post<Chat>('/chats')).data;
+      data = await (
+        await fetch(import.meta.env.VITE_API_BASE_URL + '/chats', { method: 'POST' })
+      ).json();
     }
     setChat(data);
   }, [chat?.id]);
 
   const sendMessage = useCallback(async () => {
     if (chat?.id) {
-      axios.post<Message>('/chats/' + chat.id + '/messages', { type: 'text', content: message });
+      fetch(import.meta.env.VITE_API_BASE_URL + '/chats/' + chat.id + '/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ type: 'text', content: message }),
+      });
       setMessage('');
     }
   }, [message, chat?.id]);

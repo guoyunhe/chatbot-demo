@@ -10,7 +10,7 @@ export default function MessageBubble({ message }: MessageBubbleProps) {
   const rootRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    rootRef.current?.scrollIntoView();
+    rootRef.current?.scrollIntoView?.();
   }, []);
   return (
     <Box
