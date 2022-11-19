@@ -1,8 +1,5 @@
-import { Box, Button, OutlinedInput, Paper } from '@mui/material';
-import { useCallback, useEffect, useState } from 'react';
-import { Send } from '@mui/icons-material';
-import { Chat, Message } from './types';
-import axios from 'axios';
+import { Box } from '@mui/material';
+import { Message } from './types';
 import MessageBubble from './MessageBubble';
 
 export interface MessagesListProps {
