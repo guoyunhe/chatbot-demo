@@ -27,13 +27,6 @@
     "build"
   ],
   "prettier": {
-    "trailingComma": "es5",
-    "semi": false,
-    "singleQuote": true,
-    "useTabs": false,
-    "quoteProps": "consistent",
-    "bracketSpacing": true,
-    "arrowParens": "always",
     "printWidth": 100
   },
   "devDependencies": {
@@ -49,15 +42,20 @@
     "eslint-plugin-prettier": "^4.2.1",
     "pino-pretty": "^9.1.1",
     "prettier": "^2.7.1",
-    "typescript": "~4.6",
+    "typescript": "~4.6.4",
     "youch": "^3.2.2",
     "youch-terminal": "^2.1.5"
   },
   "dependencies": {
-    "@adonisjs/core": "^5.8.0",
-    "@adonisjs/repl": "^3.1.0",
+    "@adonisjs/core": "^5.8.9",
+    "@adonisjs/lucid": "^18.2.0",
+    "@adonisjs/repl": "^3.1.11",
+    "@japa/core": "^7.3.0",
+    "luxon": "^3.1.0",
+    "openapi-types": "^12.0.2",
     "proxy-addr": "^2.0.7",
     "reflect-metadata": "^0.1.13",
-    "source-map-support": "^0.5.21"
+    "source-map-support": "^0.5.21",
+    "sqlite3": "^5.1.2"
   }
 }
