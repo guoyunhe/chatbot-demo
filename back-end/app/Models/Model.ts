@@ -1,5 +1,5 @@
-import { BaseModel, column, LucidModel, SnakeCaseNamingStrategy } from "@ioc:Adonis/Lucid/Orm";
-import { DateTime } from "luxon";
+import { BaseModel, column, LucidModel, SnakeCaseNamingStrategy } from '@ioc:Adonis/Lucid/Orm';
+import { DateTime } from 'luxon';
 
 class CamelCaseNamingStrategy extends SnakeCaseNamingStrategy {
   public serializedName(_model: LucidModel, attributeName: string): string {

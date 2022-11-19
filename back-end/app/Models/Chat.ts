@@ -1,10 +1,7 @@
-import { column } from "@ioc:Adonis/Lucid/Orm";
-import Model from "./Model";
+import { column } from '@ioc:Adonis/Lucid/Orm';
+import Model from './Model';
 
-export default class User extends Model {
+export default class Chat extends Model {
   @column()
-  public name: string;
-
-  @column()
-  public email: string;
+  public title: string | null;
 }
