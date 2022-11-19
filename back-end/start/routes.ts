@@ -19,7 +19,106 @@
 */
 
 import Route from '@ioc:Adonis/Core/Route';
+import Chat from 'App/Models/Chat';
+import Message from 'App/Models/Message';
 
 Route.get('/', async () => {
   return { hello: 'world' };
+});
+
+// start a new chat
+Route.post('/chats', async () => {
+  const chat = new Chat();
+  await chat.save();
+
+  // create a greeting message
+  Message.create({
+    chatId: chat.id,
+    type: 'text',
+    content: 'Hi there, I am Aida, an AI bot created by Artflow',
+  });
+
+  return chat;
+});
+
+// get chat with messages
+Route.get('/chats/:id', async ({ request }) => {
+  const chat = await Chat.find(request.param('id'));
+  await chat?.load('messages');
+  return chat;
+});
+
+// create new message
+Route.post('/chats/:chatId/messages', async ({ request }) => {
+  const message = await Message.create({
+    chatId: request.param('chatId'),
+    type: request.input('type'),
+    content: request.input('content'),
+  });
+
+  // mock chatbot response
+  // in real world, it should be sent to an AI server and create a new job.
+  // after the job is done, the AI server will call a webhook to update messages
+  setTimeout(async () => {
+    if (message.type === 'text') {
+      if (message.content.includes('create story')) {
+        await Message.create({
+          chatId: request.param('chatId'),
+          type: 'text',
+          content: 'Sure, writing story now...(this can take 10 seconds)',
+        });
+        const spinner = await Message.create({
+          chatId: request.param('chatId'),
+          type: 'spinner',
+        });
+        setTimeout(async () => {
+          await spinner.delete();
+          await Message.create({
+            chatId: request.param('chatId'),
+            type: 'text',
+            content: 'Here is the start of the story you asked for, enjoy!',
+          });
+          await Message.create({
+            chatId: request.param('chatId'),
+            type: 'text',
+            content:
+              "Space immigration is a dangerous journey, and the Rapsodia's crew was more than willing to accept the assistance of an experienced pilot. The ship was scheduled for an overhaul at a local repair facility, so they'd agreed that she could take it out on a test flight and report back about any issues before the work began",
+          });
+        }, 10 * 1000);
+      } else if (message.content.includes('create portrait')) {
+        await Message.create({
+          chatId: request.param('chatId'),
+          type: 'text',
+          content: 'Sure, creating character now...(this can take 30 seconds)',
+        });
+        const spinner = await Message.create({
+          chatId: request.param('chatId'),
+          type: 'spinner',
+        });
+        setTimeout(async () => {
+          await spinner.delete();
+          await Message.create({
+            chatId: request.param('chatId'),
+            type: 'text',
+            content: 'Here is the character portrait you requested for "warhammer space trader"',
+          });
+          await Message.create({
+            chatId: request.param('chatId'),
+            type: 'image',
+            content: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61',
+          });
+        }, 10 * 1000);
+      } else {
+        // not in predefined cases, return general greetings
+        Message.create({
+          chatId: request.param('chatId'),
+          type: 'text',
+          content: 'Good day, how can I help you?',
+        });
+      }
+    }
+  }, 1000);
+  // mock ends
+
+  return message;
 });
