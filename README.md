@@ -43,4 +43,7 @@ npm install
 
 # start server with hot-module-replacement
 npm run dev
+
+# or if you want to run unit test
+npm test
 ```

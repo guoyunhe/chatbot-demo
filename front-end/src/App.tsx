@@ -77,8 +77,14 @@ function App() {
             onChange={(e) => setMessage(e.target.value)}
             size="small"
             sx={{ flex: '1 1 100%' }}
+            data-testid="message-box"
           />
-          <Button variant="contained" onClick={sendMessage} disabled={!message}>
+          <Button
+            variant="contained"
+            onClick={sendMessage}
+            disabled={!message}
+            data-testid="send-button"
+          >
             <Send />
           </Button>
         </Box>
