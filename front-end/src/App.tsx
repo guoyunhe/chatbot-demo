@@ -1,29 +1,66 @@
-import { useState } from 'react';
-import reactLogo from './assets/react.svg';
-import './App.css';
+import { Box, Button, OutlinedInput, Paper } from '@mui/material';
+import { useCallback, useEffect, useState } from 'react';
+import { Send } from '@mui/icons-material';
+import { Chat } from './types';
+import axios from 'axios';
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [chat, setChat] = useState<Chat | null>(null);
+
+  const loadChat = useCallback(async () => {
+    let data: Chat;
+    if (chat?.id) {
+      data = (await axios.get<Chat>('/chats/' + chat.id)).data;
+    } else {
+      data = (await axios.post<Chat>('/chats')).data;
+    }
+    setChat(data);
+  }, [chat?.id]);
+
+  useEffect(() => {
+    // initialize chat
+    loadChat();
+
+    // refresh chat messages every second
+    const timer = setInterval(() => {
+      loadChat();
+    }, 1000);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, [loadChat]);
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
-    </div>
+    <Box
+      sx={{
+        width: '100vw',
+        height: '100vh',
+        background: '#333',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
+      <Paper
+        sx={{
+          width: '100%',
+          maxWidth: 400,
+          height: '100%',
+          maxHeight: 700,
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        <Box sx={{ flex: '1 1 100%', background: '#eee' }}>Yoo</Box>
+        <Box sx={{ p: 1, display: 'flex', gap: 1 }}>
+          <OutlinedInput size="small" sx={{ flex: '1 1 100%' }} />
+          <Button variant="contained">
+            <Send />
+          </Button>
+        </Box>
+      </Paper>
+    </Box>
   );
 }
 

@@ -22,21 +22,18 @@ import Route from '@ioc:Adonis/Core/Route';
 import Chat from 'App/Models/Chat';
 import Message from 'App/Models/Message';
 
-Route.get('/', async () => {
-  return { hello: 'world' };
-});
-
 // start a new chat
 Route.post('/chats', async () => {
-  const chat = new Chat();
-  await chat.save();
+  const chat = await Chat.create({ title: 'New Chat' });
 
   // create a greeting message
-  Message.create({
+  await Message.create({
     chatId: chat.id,
     type: 'text',
     content: 'Hi there, I am Aida, an AI bot created by Artflow',
   });
+
+  await chat.load('messages');
 
   return chat;
 });
