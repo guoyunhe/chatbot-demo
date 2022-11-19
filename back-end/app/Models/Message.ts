@@ -3,6 +3,10 @@ import Chat from './Chat';
 import Model from './Model';
 
 export default class Message extends Model {
+  // bot or user
+  @column()
+  public from: string;
+
   // text, image, video, spinner, sticker, etc.
   @column()
   public type: string;
