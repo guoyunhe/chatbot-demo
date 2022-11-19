@@ -7,6 +7,7 @@ interface Model {
 
 export interface Message extends Model {
   chatId: number;
+  from: string;
   type: string;
   content: string;
 }

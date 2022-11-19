@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { Send } from '@mui/icons-material';
 import { Chat } from './types';
 import axios from 'axios';
+import MessagesList from './MessagesList';
 
 function App() {
   const [chat, setChat] = useState<Chat | null>(null);
@@ -52,7 +53,9 @@ function App() {
           flexDirection: 'column',
         }}
       >
-        <Box sx={{ flex: '1 1 100%', background: '#eee' }}>Yoo</Box>
+        <Box sx={{ flex: '1 1 100%', background: '#eee' }}>
+          <MessagesList messages={chat?.messages || []} />
+        </Box>
         <Box sx={{ p: 1, display: 'flex', gap: 1 }}>
           <OutlinedInput size="small" sx={{ flex: '1 1 100%' }} />
           <Button variant="contained">
