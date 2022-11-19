@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, OutlinedInput, Paper } from '@mui/material';
+import { Avatar, Box, Button, CircularProgress, OutlinedInput, Paper } from '@mui/material';
 import { Send } from '@mui/icons-material';
 import { Message } from './types';
 
@@ -17,14 +17,21 @@ export default function MessageBubble({ message }: MessageBubbleProps) {
       }}
     >
       <Avatar>{message.from === 'bot' ? 'A' : 'C'}</Avatar>
-      <Paper
-        sx={{
-          p: 1,
-          maxWidth: 250,
-        }}
-      >
-        {message.type === 'text' && message.content}
-      </Paper>
+
+      {message.type === 'text' && (
+        <Paper
+          sx={{
+            p: 1,
+            maxWidth: 250,
+          }}
+        >
+          {message.content}
+        </Paper>
+      )}
+      {message.type === 'image' && (
+        <Paper component="img" src={message.content} style={{ maxWidth: 250, height: 'auto' }} />
+      )}
+      {message.type === 'spinner' && <CircularProgress />}
     </Box>
   );
 }

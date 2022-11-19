@@ -87,7 +87,7 @@ Route.post('/chats/:chatId/messages', async ({ request }) => {
             content:
               "Space immigration is a dangerous journey, and the Rapsodia's crew was more than willing to accept the assistance of an experienced pilot. The ship was scheduled for an overhaul at a local repair facility, so they'd agreed that she could take it out on a test flight and report back about any issues before the work began",
           });
-        }, 10 * 1000);
+        }, 5 * 1000);
       } else if (message.content.includes('create portrait')) {
         await Message.create({
           chatId: request.param('chatId'),
@@ -112,7 +112,7 @@ Route.post('/chats/:chatId/messages', async ({ request }) => {
             chatId: request.param('chatId'),
             from: 'bot',
             type: 'image',
-            content: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61',
+            content: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=600',
           });
         }, 10 * 1000);
       } else {
